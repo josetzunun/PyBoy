@@ -1,0 +1,23 @@
+name: PyTest PyBoy
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  release:
+    types: [published]
+    
+jobs:
+  test_cython:
+    name: Cython - Build, Test and Deploy
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [[self-hosted, macOS], [self-hosted, linux], [self-hosted, windows, cpython]]
+        python-version: [3.7, 3.8, 3.9, "3.10"]
+        exclude:
+        # Gives the following error: /usr/bin/ld: cannot find -lpython3.7m
+        - os: [self-hosted, linux]
+        WIP
